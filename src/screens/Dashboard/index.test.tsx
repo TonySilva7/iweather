@@ -22,6 +22,8 @@ describe("Screen: Dashboard", () => {
 
     render(<Dashboard />)
 
+    await waitFor(() => expect(screen.findByText(/rio do sul/i, {}, { timeout: 3000 })).toBeTruthy);
+
     // const cityName = await waitFor(() => screen.getByText(/rio do sul/i));
     // expect(cityName).toBeTruthy() 
   })
