@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push: # define que a ação será executada quando houver um push na `main`
@@ -24,3 +24,13 @@ jobs: # define os jobs que serão executados
 
       - name: Run Tests
         run: npm test # executa os testes do projeto
+
+    CD: # define um job com o nome `CD`
+    name: Continuous Delivery
+    runs-on: ubuntu-latest # define o sistema operacional que será utilizado (container ubuntu)
+
+    needs: CI # define que o job `CD` depende do job `CI` <<----- aqui está a grande diferença
+
+    steps: # define os passos que serão executados
+      - name: Checkout repository
+        uses: actions/checkout@v3 # utiliza a ação `checkout` para clonar o repositório (é um passo padrão para a maioria dos workflows)
