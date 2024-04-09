@@ -17,7 +17,7 @@ jobs: # define os jobs que serão executados
       - name: Setup Node
         uses: actions/setup-node@v3 # utiliza a ação `setup-node` para configurar o ambiente Node.js
         with:
-          node-version: 18.x
+          node-version: 20.x
 
       - name: Install dependencies
         run: npm install # instala as dependências do projeto
