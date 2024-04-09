@@ -1,5 +1,5 @@
 import { mockWeatherAPIResponse } from "../../__mocks__/api/mockWeatherAPIResponse"
-import { render, screen, act, fireEvent, waitFor, waitForElementToBeRemoved } from "@utils/testes/customRender"
+import { customRender, screen, act, fireEvent, waitFor, waitForElementToBeRemoved } from "@utils/testes/customRender"
 import { api } from "@services/api"
 import { Dashboard } from "@screens/Dashboard"
 import { saveStorageCity, getStorageCity } from "@libs/asyncStorage/cityStorage"
@@ -20,7 +20,7 @@ describe("Screen: Dashboard", () => {
 
     await saveStorageCity(city)
 
-    render(<Dashboard />)
+    customRender(<Dashboard />)
 
     await waitFor(() => expect(screen.findByText(/rio do sul/i, {}, { timeout: 3000 })).toBeTruthy);
 
@@ -41,23 +41,23 @@ describe("Screen: Dashboard", () => {
       .mockResolvedValueOnce({ data: mockCityAPIResponse })
       .mockResolvedValueOnce({ data: mockWeatherAPIResponse })
 
-    render(<Dashboard />)
+      customRender(<Dashboard />)
 
 
-    // await waitForElementToBeRemoved(() => screen.queryByTestId('loading'))
+    await waitForElementToBeRemoved(() => screen.queryByTestId('loading'))
 
-    // const cityName = 'São Paulo'
+    const cityName = 'São Paulo'
 
-    // await waitFor(() => act(() => {
-    //   const search = screen.getByTestId('search-input')
-    //   fireEvent.changeText(search, cityName)
-    // }))
+    await waitFor(() => act(() => {
+      const search = screen.getByTestId('search-input')
+      fireEvent.changeText(search, cityName)
+    }))
 
-    // await waitFor(() => act(() => {
-    //   fireEvent.press(screen.getByText(cityName, { exact: false }))
-    // }))
+    await waitFor(() => act(() => {
+      fireEvent.press(screen.getByText(cityName, { exact: false }))
+    }))
 
-    // expect(screen.getByText(cityName, { exact: false })).toBeTruthy()
+    expect(screen.getByText(cityName, { exact: false })).toBeTruthy()
 
   })
 })

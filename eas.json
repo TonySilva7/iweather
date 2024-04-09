@@ -3,15 +3,18 @@
     "version": ">= 7.6.2"
   },
   "build": {
-    "preview": {
+    "preview": { // usado para testes
       "android": {
         "distribution": "internal"
+      },
+      "ios": {
+        "simulator": true
       },
       "env": {
         "EXPO_PUBLIC_WEATHER_APP_ID": "d45d6ae054dde05613a3f08bcff0dbd7"
       }
     },
-    "production": {
+    "production": { // usado para produção
       "env": {
         "EXPO_PUBLIC_WEATHER_APP_ID": "d45d6ae054dde05613a3f08bcff0dbd7"
       }
