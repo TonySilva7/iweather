@@ -1,0 +1,19 @@
+name: CD
+
+on:
+  workflow_run: # define que a ação será executada quando um outro workflow terminar de executar
+    workflows: [CI] # define que o workflow `CD` será executado após o workflow nomeado `CI`
+    types:
+      - completed # define que será executado somente quando o workflow `CI` terminar de executar
+
+jobs: # define os jobs que serão executados
+  CD: # define um job com o nome `CD`
+    name: Continuous Delivery
+    runs-on: ubuntu-latest # define o sistema operacional que será utilizado (container ubuntu)
+
+    # Complementa a linha 7, e define que o job será executado apenas se o workflow que o disparou terminou com sucesso
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} 
+
+    steps: # define os passos que serão executados
+      - name: Checkout repository
+        uses: actions/checkout@v3 # utiliza a ação `checkout` para clonar o repositório (é um passo padrão para a maioria dos workflows)
