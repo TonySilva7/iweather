@@ -25,7 +25,7 @@ jobs: # define os jobs que serão executados
       - name: Run Tests
         run: npm test # executa os testes do projeto
 
-    CD: # define um job com o nome `CD`
+  CD: # define um job com o nome `CD`
     name: Continuous Delivery
     runs-on: ubuntu-latest # define o sistema operacional que será utilizado (container ubuntu)
 
