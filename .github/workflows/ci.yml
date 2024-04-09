@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push: # define que a ação será executada quando houver um push na `main`
+    branches: 
+      - main
+
+jobs: # define os jobs que serão executados
+  CI: # define um job com o nome `CI`
+    name: Continuous Integration
+    runs-on: ubuntu-latest # define o sistema operacional que será utilizado (container ubuntu)
+
+    steps: # define os passos que serão executados
+      - name: Checkout repository
+        uses: actions/checkout@v3 # utiliza a ação `checkout` para clonar o repositório (é um passo padrão para a maioria dos workflows)
+
+      - name: Setup Node
+        uses: actions/setup-node@v3 # utiliza a ação `setup-node` para configurar o ambiente Node.js
+        with:
+          node-version: 18.x
+
+      - name: Install dependencies
+        run: npm install # instala as dependências do projeto
+
+      - name: Run Tests
+        run: npm test # executa os testes do projeto
