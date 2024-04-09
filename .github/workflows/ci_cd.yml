@@ -34,3 +34,21 @@ jobs: # define os jobs que serão executados
     steps: # define os passos que serão executados
       - name: Checkout repository
         uses: actions/checkout@v3 # utiliza a ação `checkout` para clonar o repositório (é um passo padrão para a maioria dos workflows)
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: Setup EAS # adiciona a ação `expo/expo-github-action` para configurar o ambiente EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest # define a versão do EAS que será utilizada
+          packager: npm # define o gerenciador de pacotes que será utilizado
+          token: ${{ secrets.EAS_EXPO_TOKEN }} # define o token gerado no EAS e armazenado no GitHub Secrets
+
+
+      # executa o comando `eas build` para gerar o build do aplicativo no EAS
+      - name: Build 
+        run: eas build --platform android --profile preview --non-interactive --no-wait
+

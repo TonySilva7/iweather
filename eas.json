@@ -9,15 +9,11 @@
       },
       "ios": {
         "simulator": true
-      },
-      "env": {
-        "EXPO_PUBLIC_WEATHER_APP_ID": "d45d6ae054dde05613a3f08bcff0dbd7"
       }
+      // "env": {}, // foi mudado para "secrets" no expo.dev
     },
     "production": { // usado para produção
-      "env": {
-        "EXPO_PUBLIC_WEATHER_APP_ID": "d45d6ae054dde05613a3f08bcff0dbd7"
-      }
+      // "env": {}, // foi mudado para "secrets" no expo.dev
     }
   }
 }
