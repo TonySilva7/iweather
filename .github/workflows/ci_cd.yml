@@ -47,8 +47,19 @@ jobs: # define os jobs que serão executados
           packager: npm # define o gerenciador de pacotes que será utilizado
           token: ${{ secrets.EAS_EXPO_TOKEN }} # define o token gerado no EAS e armazenado no GitHub Secrets
 
+      # A secret `EAS_GOOGLE_PLAY_API` foi convertida de um api key (Google) em JSON para base64. O comando abaixo faz:
+      # 1. Salva a secret em um arquivo temporário
+      # 2. Decodifica a secret de base64 no arquivo `google-services.json.b64` para JSON, no arquivo `google-services.json`, para ser usado no build
+      # PS. o arg `-d` é de decode (decodifica), e o arg `-i` é de input (de onde a secret será lida)
+      - name: Get config file
+        env: 
+          GOOGLE_SERVICES_64: ${{ secrets.EAS_GOOGLE_PLAY_API }}
+        run: |
+          echo $GOOGLE_SERVICES_64 > google-services.json.b64
+          base64 -d -i google-services.json.b64 > google-services.json
 
-      # executa o comando `eas build` para gerar o build do aplicativo no EAS
-      - name: Build 
-        run: eas build --platform android --profile preview --non-interactive --no-wait
+      # executa o comando `eas build` para gerar o build do aplicativo no EAS, e envia para a Google Play Store no modo preview
+      # Vc pode trocar o `--profile preview` por `--profile production` para enviar para a produção
+      - name: Build and Submit 
+        run: eas build --platform android --profile preview --non-interactive --auto-submit-with-profile=preview --no-wait
 

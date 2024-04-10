@@ -3,17 +3,30 @@
     "version": ">= 7.6.2"
   },
   "build": {
-    "preview": { // usado para testes
+    "preview": {
+      "autoIncrement": true,
       "android": {
-        "distribution": "internal"
+        "distribution": "internal",
+        "autoIncrement": "versionCode"
       },
       "ios": {
         "simulator": true
       }
-      // "env": {}, // foi mudado para "secrets" no expo.dev
     },
-    "production": { // usado para produção
-      // "env": {}, // foi mudado para "secrets" no expo.dev
+    "production": {
+      "autoIncrement": true,
+      "android": {
+        "autoIncrement": "versionCode"
+      }
+    }
+  },
+  "submit": { // integra com o Google Play Console
+    "preview": {
+      "android": {
+        "track": "internal", // envia o app para o Google Play Console como interno
+        "servicesAccountKeyPath": "google-services.json", // json com as credenciais do Google Play Console
+        "releaseStatus": "draft" // envia o app para o Google Play Console como rascunho
+      }
     }
   }
 }
