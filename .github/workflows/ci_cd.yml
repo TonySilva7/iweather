@@ -47,6 +47,9 @@ jobs: # define os jobs que serão executados
           packager: npm # define o gerenciador de pacotes que será utilizado
           token: ${{ secrets.EAS_EXPO_TOKEN }} # define o token gerado no EAS e armazenado no GitHub Secrets
 
+      - name: Install Dependencies
+        uses: npm install
+
       # A secret `EAS_GOOGLE_PLAY_API` foi convertida de um api key (Google) em JSON para base64. O comando abaixo faz:
       # 1. Salva a secret em um arquivo temporário
       # 2. Decodifica a secret de base64 no arquivo `google-services.json.b64` para JSON, no arquivo `google-services.json`, para ser usado no build
@@ -61,5 +64,14 @@ jobs: # define os jobs que serão executados
       # executa o comando `eas build` para gerar o build do aplicativo no EAS, e envia para a Google Play Store no modo preview
       # Vc pode trocar o `--profile preview` por `--profile production` para enviar para a produção
       - name: Build and Submit 
-        run: eas build --platform android --profile preview --non-interactive --auto-submit-with-profile=preview --no-wait
+        # rode o comando abaixo com a flag `--platform all` para enviar para a App Store e Google Play Store ao mesmo tempo
+        run: EXPO_APPLE_APP_SPECIFIC_PASSWORD=${{ secrets.EAS_APPLE_APP_SPECIFIC_PASSWORD }} eas build --platform all --profile preview --non-interactive --auto-submit-with-profile=preview --no-wait
 
+        # rode o comando abaixo com a flag `--platform android` se vc deseja enviar o app apenas para a Google Play Store
+        # run: eas build --platform android --profile preview --non-interactive --auto-submit-with-profile=preview --no-wait
+
+        # Ou... (ou um ou outro, não os dois ao mesmo tempo)
+
+        # rode o comando abaixo com a flag `--platform ios` se vc deseja enviar o app apenas para a App Store
+        # Note que a secret `EAS_APPLE_APP_SPECIFIC_PASSWORD` é a senha gerada no Apple Developer para o EAS
+        # run: EXPO_APPLE_APP_SPECIFIC_PASSWORD=${{ secrets.EAS_APPLE_APP_SPECIFIC_PASSWORD }} eas build --platform ios --profile preview --non-interactive --auto-submit-with-profile=preview --no-wait
