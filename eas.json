@@ -13,7 +13,8 @@
       "ios": {
         "autoIncrement": "buildNumber",
         "simulator": true
-      }
+      },
+      "channel": "preview"// eas update // eas update <<----------
     },
     "production": {
       "autoIncrement": true,
@@ -23,7 +24,8 @@
       "ios": {
         "autoIncrement": "buildNumber",
         "image": "latest"
-      }
+      },
+      "channel": "production" // eas update <<----------
     }
   },
   "submit": { // integra com o Google Play Console
